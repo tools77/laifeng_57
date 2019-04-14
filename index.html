@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>敲7，5嘚瑟</title>
+	</head>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		.zr_box{
+			text-align: center;
+		}
+		.zr_box .zr_head{
+			margin-top: 50px;
+		}
+		.zr_box .zr_body{
+			margin-top: 50px;
+		}
+	</style>
+	<body>
+		<div class="zr_box">
+			<p>按上+1，按下-1</p>
+			<div class="zr_head">
+				<h2 id="behavior" style="color: red;">
+					<span id="be0">1</span>&nbsp;
+					<span id="be1">嘚瑟</span>&nbsp;
+					<span id="be2">敲桌</span>
+				</h2>
+				<h1 id="zr_num">1</h1>
+			</div>
+			<div class="zr_body">
+				<div class="star_num">
+					起始数字：
+					<input type="text" name="star_num" id="star_num" value="1" />
+					<button onclick='btn_starNum()'>确定</button>
+				</div>
+				<div class="behavior1">
+					行为1：
+					<input type="text" name="behavior1" id="behavior1" value="嘚瑟" />
+					数字1：
+					<input type="text" name="zr_num1" id="zr_num1" value="5" />
+					<button onclick='btn_behavior1()'>确定</button>
+				</div>
+				<div class="behavior2">
+					行为2：
+					<input type="text" name="behavior2" id="behavior2" value="敲桌" />
+					数字2：
+					<input type="text" name="zr_num2" id="zr_num2" value="7" />
+					<button onclick='btn_behavior2()'>确定</button>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			ifSet();
+			starSet();
+			setBehavior();
+			//判断设置初始值
+			function ifSet(){
+				//开始数字
+				if(!localStorage.getItem('star_num')){
+					localStorage.setItem('star_num',1);
+				}
+				//行为1
+				if(!localStorage.getItem('behavior1')){
+					localStorage.setItem('behavior1','嘚瑟');
+				}
+				//数字1
+				if(!localStorage.getItem('zr_num1')){
+					localStorage.setItem('zr_num1',5);
+				}
+				//行为2
+				if(!localStorage.getItem('behavior2')){
+					localStorage.setItem('behavior2','敲桌');
+				}
+				//数字2
+				if(!localStorage.getItem('zr_num2')){
+					localStorage.setItem('zr_num2',7);
+				}
+			}
+			//获取缓存值
+			function starSet(){
+				//起始数字
+				document.getElementById('star_num').value=localStorage.getItem('star_num');
+				//行为1
+				document.getElementById('behavior1').value=localStorage.getItem('behavior1');
+				//数字1
+				document.getElementById('zr_num1').value=localStorage.getItem('zr_num1');
+				//行为2
+				document.getElementById('behavior2').value=localStorage.getItem('behavior2');
+				//数字2
+				document.getElementById('zr_num2').value=localStorage.getItem('zr_num2');
+				//总数字
+				document.getElementById('zr_num').innerHTML=localStorage.getItem('star_num');
+				
+			}
+			
+			//点击设置起始数字
+			function btn_starNum(){
+				var star_num=document.getElementById('star_num').value;
+				localStorage.setItem('star_num',star_num);
+				window.location.reload();
+			}
+			//点击设置行为1和数字1
+			function btn_behavior1(){
+				var behavior1=document.getElementById('behavior1').value;
+				localStorage.setItem('behavior1',behavior1);
+				var zr_num1=document.getElementById('zr_num1').value;
+				localStorage.setItem('zr_num1',zr_num1);
+				window.location.reload();
+			}
+			//点击设置行为2和数字2
+			function btn_behavior2(){
+				var behavior2=document.getElementById('behavior2').value;
+				localStorage.setItem('behavior2',behavior2);
+				var zr_num2=document.getElementById('zr_num2').value;
+				localStorage.setItem('zr_num2',zr_num2);
+				window.location.reload();
+			}
+			//设置要显示的行为
+			function setBehavior(){
+				var zr_num=parseInt(document.getElementById('zr_num').innerHTML);
+				console.log(zr_num);
+				str_zrNum=String(zr_num);
+				//设置行为1：整除zr_num1,含有zr_num1
+				if(str_zrNum.indexOf(localStorage.getItem('zr_num1'))>-1||(zr_num%localStorage.getItem('zr_num1'))==0){
+					document.getElementById('be1').innerHTML=localStorage.getItem('behavior1');
+				}
+				else{
+					document.getElementById('be1').innerHTML='';
+				}
+				//设置行为2：整除7,含有7
+				if(str_zrNum.indexOf(localStorage.getItem('zr_num2'))>-1||(zr_num%localStorage.getItem('zr_num2'))==0){
+					document.getElementById('be2').innerHTML=localStorage.getItem('behavior2');
+				}
+				else{
+					document.getElementById('be2').innerHTML='';
+				}
+				//设置行为0:常规
+				if(str_zrNum.indexOf(localStorage.getItem('zr_num2'))>-1||(zr_num%localStorage.getItem('zr_num2'))==0||str_zrNum.indexOf(localStorage.getItem('zr_num1'))>-1||(zr_num%localStorage.getItem('zr_num1'))==0){
+					document.getElementById('be0').innerHTML='';
+				}
+				else{
+					document.getElementById('be0').innerHTML=zr_num;
+				}
+			}
+			//按键事件.上键+1,下键-1
+			document.onkeydown=function(e){
+				e=window.event||e;
+				switch(e.keyCode){
+					case 38://上键
+						var star_num=document.getElementById('star_num').value;
+						star_num++;
+						localStorage.setItem('star_num',star_num);
+						window.location.reload();
+						break;
+					case 40://下键
+						var star_num=document.getElementById('star_num').value;
+						star_num--;
+						localStorage.setItem('star_num',star_num);
+						window.location.reload();
+						break;
+				}
+			}
+			
+		</script>
+	</body>
+</html>
