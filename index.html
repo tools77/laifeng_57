@@ -3,6 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<title>敲7，5嘚瑟</title>
 	</head>
 	<style type="text/css">
@@ -19,37 +20,48 @@
 		.zr_box .zr_body{
 			margin-top: 50px;
 		}
+		.form-inline{
+			justify-content: center;
+		}
 	</style>
 	<body>
 		<div class="zr_box">
-			<p>按上+1，按下-1</p>
+			<p>按键盘上或屏幕+:+1，按键盘下或屏幕-:-1</p>
 			<div class="zr_head">
 				<h2 id="behavior" style="color: red;">
-					<span id="be0">1</span>&nbsp;
-					<span id="be1">嘚瑟</span>&nbsp;
-					<span id="be2">敲</span>
+					<span id="be0"></span>
+					<span id="be1"></span>
+					<span id="be2"></span>
 				</h2>
-				<h1 id="zr_num">1</h1>
+				<div style="display: flex;align-items: center;font-size: 2.5rem;">
+					<span style="width: 20%;cursor: pointer;" onclick='star_num_minus();'>-</span>
+					<h1 id="zr_num" style="width: 100%;margin: 0;">1</h1>
+					<span style="width: 20%;cursor: pointer;" onclick='star_num_plus();'>+</span>
+				</div>
+				
 			</div>
 			<div class="zr_body">
-				<div class="star_num">
-					起始数字：
-					<input type="text" name="star_num" id="star_num" value="1" />
-					<button onclick='btn_starNum()'>确定</button>
-				</div>
-				<div class="behavior1">
-					行为1：
-					<input type="text" name="behavior1" id="behavior1" value="嘚瑟" />
-					数字1：
-					<input type="text" name="zr_num1" id="zr_num1" value="5" />
-					<button onclick='btn_behavior1()'>确定</button>
-				</div>
-				<div class="behavior2">
-					行为2：
-					<input type="text" name="behavior2" id="behavior2" value="敲" />
-					数字2：
-					<input type="text" name="zr_num2" id="zr_num2" value="7" />
-					<button onclick='btn_behavior2()'>确定</button>
+				<div class="zr_function" style="text-align: left;">
+					<div class="form-inline mb-5 col-md-auto" style="justify-content: center;">
+						<label>起始数字:</label>
+						<input class="form-control m-2" type="text" name="star_num" id="star_num" value="1" />
+						<!-- <input type="button" onclick="btn_starNum()" class="mb-2 btn-info form-control" value="确定"/> -->
+						<button class="form-control btn-info m-2" onclick='btn_starNum()'>确定</button>
+					</div>
+					<div class="form-inline mb-5 col-md-auto">
+						<label>数字1：</label>
+						<input class="form-control m-2" type="text" name="zr_num1" id="zr_num1" value="5" />
+						<label>行为1：</label>
+						<input class="form-control m-2" type="text" name="behavior1" id="behavior1" value="嘚瑟" />
+						<button class="btn-info form-control m-2" onclick='btn_behavior1()'>确定</button>
+					</div>
+					<div class="form-inline mb-5 col-md-auto">
+						<label>数字2：</label>
+						<input class="form-control m-2" type="text" name="zr_num2" id="zr_num2" value="7" />
+						<label>行为2：</label>
+						<input class="form-control m-2" type="text" name="behavior2" id="behavior2" value="敲" />
+						<button class="btn-info form-control m-2" onclick='btn_behavior2()'>确定</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -151,20 +163,27 @@
 				e=window.event||e;
 				switch(e.keyCode){
 					case 38://上键
-						var star_num=document.getElementById('star_num').value;
-						star_num++;
-						localStorage.setItem('star_num',star_num);
-						window.location.reload();
+						star_num_plus();
 						break;
 					case 40://下键
-						var star_num=document.getElementById('star_num').value;
-						star_num--;
-						localStorage.setItem('star_num',star_num);
-						window.location.reload();
+						star_num_minus();
 						break;
 				}
 			}
-			
+			//加一
+			function star_num_plus(){
+				let star_num=document.getElementById('star_num').value;
+				star_num++;
+				localStorage.setItem('star_num',star_num);
+				window.location.reload();
+			}
+			//减一
+			function star_num_minus(){
+				let star_num=document.getElementById('star_num').value;
+				star_num--;
+				localStorage.setItem('star_num',star_num);
+				window.location.reload();
+			}
 		</script>
 	</body>
 </html>
